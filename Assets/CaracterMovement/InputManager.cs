@@ -30,14 +30,34 @@ public class InputManager : MonoBehaviour, GamePlay.IPlayerInputActions
     {
         
     }
+
     public void OnMove(InputAction.CallbackContext context)
     {
-        
+        if (context.started)
+        {
+            Debug.Log("started move");
+            InputActions.MoveEventStart?.Invoke();
+        }
+
+        if (context.performed)
+        {
+            Debug.Log("Preformed move");
+        }
+
+        if (context.canceled)
+        {
+            Debug.Log("Canceled move");
+        }
+    }
+
+    private void OnDisable()
+    {
+        gameplay.PlayerInput.Disable();
     }
 }
 
 
 public static class InputActions
 {
-    public static Action<Vector2> MoveEvent;
+    public static Action MoveEventStart;
 }
